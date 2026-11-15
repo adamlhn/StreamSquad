@@ -1,8 +1,10 @@
 class Lecteur {
-  constructor(idElement, envoyer) {
+  constructor(idElement, envoyer, quandBloque) {
     this.envoyer = envoyer;
     this.idVideo = null;
     this.ignorerJusqua = 0;
+    this.quandBloque = quandBloque;
+    this.lectureDemandee = false;
     this.player = new YT.Player(idElement, {
       width: 640,
       height: 360,
@@ -30,6 +32,16 @@ class Lecteur {
   }
 
   appliquerEtat(etat) {
+    this.lectureDemandee = etat.enLecture;
+    if (this.lectureDemandee) {
+      setTimeout(() => {
+        const bloque = this.player.getPlayerState() !== YT.PlayerState.PLAYING;
+        if (this.lectureDemandee && bloque) {
+          this.quandBloque();
+        }
+      }, 1500);
+    }
+
     let positionAttendue = etat.position;
     if (etat.enLecture) {
       positionAttendue += (Date.now() - etat.envoyeLe) / 1000;
@@ -53,8 +65,7 @@ class Lecteur {
     }
     this.seCaler(positionAttendue);
 
-    const enLectureIci =
-      this.player.getPlayerState() === YT.PlayerState.PLAYING;
+    const enLectureIci = this.player.getPlayerState() === YT.PlayerState.PLAYING;
     if (etat.enLecture && !enLectureIci) {
       this.silence();
       this.player.playVideo();
@@ -84,5 +95,14 @@ class Lecteur {
     this.silence();
     this.player.seekTo(position, true);
     this.envoyer("video:seek", { position: position });
+  }
+
+  rejoindre() {
+    this.player.unMute();
+    const enLectureIci = this.player.getPlayerState() === YT.PlayerState.PLAYING;
+    if (this.lectureDemandee && !enLectureIci) {
+      this.silence();
+      this.player.playVideo();
+    }
   }
 }
