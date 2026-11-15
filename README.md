@@ -2,7 +2,7 @@
 
 Plateforme de visionnage de vidéo en groupe - Projet IL
 
-Lot A : synchronisation vidéo
+### Lot A : synchronisation vidéo
 
 - `serveur/logique/Lecture.js` : classe `Lecture`, l'état de référence de la vidéo d'un salon (vidéo en cours, position, lecture ou pause). Méthodes `play`, `pause`, `seek`, `charger`, `positionActuelle` et `etat` (contenu du message `video:etat`).
 - `serveur/logique/extraireIdVideo.js` : vérifie un lien YouTube (`youtube.com/watch?v=...` ou `youtu.be/...` et renvoie l'identifiant de la vidéo, ou `null`.
