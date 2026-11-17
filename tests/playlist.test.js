@@ -29,3 +29,26 @@ test("les vidéos passent dans l'ordre d'ajout", () => {
   assert.strictEqual(p.suivante(), "dQw4w9WgXcQ");
   assert.strictEqual(p.suivante(), null);
 });
+
+test("avec une seule vidéo, suivante la donne puis la playlist est vide", () => {
+  const p = new Playlist();
+  p.ajouter("https://youtu.be/M7lc1UVf-VE");
+  assert.strictEqual(p.suivante(), "M7lc1UVf-VE");
+  assert.strictEqual(p.estVide(), true);
+});
+
+test("liste() montre les vidéos dans l'ordre sans les retirer", () => {
+  const p = new Playlist();
+  p.ajouter("https://youtu.be/M7lc1UVf-VE");
+  p.ajouter("https://youtu.be/dQw4w9WgXcQ");
+  assert.deepStrictEqual(p.liste(), ["M7lc1UVf-VE", "dQw4w9WgXcQ"]);
+  assert.strictEqual(p.estVide(), false);
+});
+
+test("liste() renvoie une copie : la modifier ne change pas la playlist", () => {
+  const p = new Playlist();
+  p.ajouter("https://youtu.be/M7lc1UVf-VE");
+  const copie = p.liste();
+  copie.push("autre");
+  assert.deepStrictEqual(p.liste(), ["M7lc1UVf-VE"]);
+});
