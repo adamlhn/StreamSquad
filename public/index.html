@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamSquad - Accueil</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header>
+        <h1>StreamSquad</h1>
+        <p>Regardez des vidéos YouTube ensemble, à distance !</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>Créer un salon</h2>
+            <p>Créez un salon et invitez vos amis.</p>
+
+            <form id="form-creer">
+                <label for="pseudo-creer">Votre pseudo :</label>
+                <input
+                    type="text"
+                    id="pseudo-creer"
+                    name="pseudo"
+                    minlength="2"
+                    maxlength="20"
+                    required
+                >
+
+                <button type="submit">Créer un salon</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Rejoindre un salon</h2>
+            <p>Entrez le code du salon pour rejoindre vos amis.</p>
+
+            <form id="form-rejoindre">
+                <label for="pseudo-rejoindre">Votre pseudo :</label>
+                <input
+                    type="text"
+                    id="pseudo-rejoindre"
+                    name="pseudo"
+                    minlength="2"
+                    maxlength="20"
+                    required
+                >
+
+                <label for="code-salon">Code du salon :</label>
+                <input
+                    type="text"
+                    id="code-salon"
+                    name="code"
+                    minlength="6"
+                    maxlength="6"
+                    pattern="[A-Z0-9]{6}"
+                    placeholder="Ex : ABC234"
+                    required
+                >
+
+                <button type="submit">Rejoindre un salon</button>
+            </form>
+        </section>
+
+        <p id="message-erreur" role="alert" aria-live="polite"></p>
+    </main>
+
+</body>
+</html>

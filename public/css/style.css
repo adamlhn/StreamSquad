@@ -1,0 +1,119 @@
+
+/* Style général */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #101827;
+    color: #ffffff;
+    min-height: 100vh;
+}
+
+/* En-tête */
+header {
+    text-align: center;
+    padding: 55px 20px 25px;
+}
+
+header h1 {
+    font-size: 42px;
+    color: #a78bfa;
+    margin-bottom: 12px;
+}
+
+header p {
+    color: #cbd5e1;
+    font-size: 17px;
+}
+
+/* Contenu principal */
+main {
+    max-width: 950px;
+    margin: 25px auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 25px;
+}
+
+/* Cartes des salons */
+section {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 15px;
+    padding: 30px;
+}
+
+section h2 {
+    color: #ffffff;
+    margin-top: 0;
+}
+
+section p {
+    color: #cbd5e1;
+}
+
+/* Formulaires */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+label {
+    font-size: 14px;
+}
+
+input {
+    padding: 13px;
+    border-radius: 8px;
+    border: 1px solid #64748b;
+    background-color: #0f172a;
+    color: white;
+    font-size: 15px;
+    width: 100%;
+}
+
+input:focus {
+    outline: 2px solid #a78bfa;
+    outline-offset: 1px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background-color: #8b5cf6;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #7c3aed;
+}
+
+/* Messages d'erreur */
+#message-erreur {
+    grid-column: 1 / -1;
+    color: #fca5a5;
+    text-align: center;
+    margin: 0;
+}
+
+/* Adaptation aux petits écrans */
+@media (max-width: 650px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 34px;
+    }
+}
