@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Essai de la classe Lecteur</title>
+  </head>
+  <body>
+    <h1>Essai de la classe Lecteur</h1>
+    <div id="lecteur"></div>
+
+    <p>
+      <button id="etat-play">Recevoir : lecture à 30 s</button>
+      <button id="etat-pause">Recevoir : pause à 60 s</button>
+      <button id="etat-video">Recevoir : autre vidéo</button>
+      <button id="plus-10">+10 s (envoie video:seek)</button>
+    </p>
+    <p><button id="rejoindre" hidden>Rejoindre la lecture</button></p>
+    <p>
+      Ouvre la console (Cmd + Option + I) : les messages « Envoyé : » sont ce que le Lecteur
+      enverrait au serveur.
+    </p>
+
+    <script src="js/Lecteur.js"></script>
+    <script>
+      let lecteur;
+
+      const boutonRejoindre = document.getElementById("rejoindre");
+
+      // Pas encore de serveur : la fonction "envoyer" affiche simplement le message.
+      // La fonction "quandBloque" affiche le bouton "Rejoindre la lecture".
+      function onYouTubeIframeAPIReady() {
+        lecteur = new Lecteur(
+          "lecteur",
+          (type, donnees) => {
+            console.log("Envoyé :", type, donnees);
+          },
+          () => {
+            console.log("Lecture bloquée : on affiche le bouton");
+            boutonRejoindre.hidden = false;
+          },
+        );
+      }
+
+      // On simule les video:etat que le serveur enverra plus tard
+      document.getElementById("etat-play").addEventListener("click", () => {
+        lecteur.appliquerEtat({
+          idVideo: "M7lc1UVf-VE",
+          position: 30,
+          enLecture: true,
+          envoyeLe: Date.now(),
+        });
+      });
+      document.getElementById("etat-pause").addEventListener("click", () => {
+        lecteur.appliquerEtat({
+          idVideo: "M7lc1UVf-VE",
+          position: 60,
+          enLecture: false,
+          envoyeLe: Date.now(),
+        });
+      });
+      document.getElementById("etat-video").addEventListener("click", () => {
+        lecteur.appliquerEtat({
+          idVideo: "aqz-KE-bpKQ",
+          position: 0,
+          enLecture: true,
+          envoyeLe: Date.now(),
+        });
+      });
+      document.getElementById("plus-10").addEventListener("click", () => {
+        lecteur.sauterA(lecteur.player.getCurrentTime() + 10);
+      });
+      // Le clic sur le bouton est le "geste de l'utilisateur" qu'exige le navigateur
+      boutonRejoindre.addEventListener("click", () => {
+        lecteur.rejoindre();
+        boutonRejoindre.hidden = true;
+      });
+
+      // Chargement de l'API YouTube
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      document.body.appendChild(tag);
+    </script>
+  </body>
+</html>

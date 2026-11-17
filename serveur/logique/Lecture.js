@@ -7,7 +7,6 @@ class Lecture {
   }
 
   positionActuelle() {
-    // si en lecture : position + temps écoulé depuis misAJourLe (en secondes)
     if (this.enLecture) {
       const ecoule = (Date.now() - this.misAJourLe) / 1000;
       return this.position + ecoule;
