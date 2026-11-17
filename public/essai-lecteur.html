@@ -26,8 +26,6 @@
 
       const boutonRejoindre = document.getElementById("rejoindre");
 
-      // Pas encore de serveur : la fonction "envoyer" affiche simplement le message.
-      // La fonction "quandBloque" affiche le bouton "Rejoindre la lecture".
       function onYouTubeIframeAPIReady() {
         lecteur = new Lecteur(
           "lecteur",
@@ -41,7 +39,6 @@
         );
       }
 
-      // On simule les video:etat que le serveur enverra plus tard
       document.getElementById("etat-play").addEventListener("click", () => {
         lecteur.appliquerEtat({
           idVideo: "M7lc1UVf-VE",
@@ -69,13 +66,11 @@
       document.getElementById("plus-10").addEventListener("click", () => {
         lecteur.sauterA(lecteur.player.getCurrentTime() + 10);
       });
-      // Le clic sur le bouton est le "geste de l'utilisateur" qu'exige le navigateur
       boutonRejoindre.addEventListener("click", () => {
         lecteur.rejoindre();
         boutonRejoindre.hidden = true;
       });
 
-      // Chargement de l'API YouTube
       const tag = document.createElement("script");
       tag.src = "https://www.youtube.com/iframe_api";
       document.body.appendChild(tag);
