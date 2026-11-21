@@ -3,73 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StreamSquad - Accueil</title>
+    <title>StreamSquad</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-    <header>
-        <h1>StreamSquad</h1>
-        <p>Regardez des vidéos YouTube ensemble, à distance !</p>
-    </header>
+    <!-- ===== PAGE D'ACCUEIL ===== -->
+    <div id="page-accueil">
+        <header class="hero">
+            <div class="logo">
+                <span class="logo-icone">▶</span>
+                <span>StreamSquad</span>
+            </div>
+            <h1>Regardez YouTube <span class="accent">ensemble</span>, à distance.</h1>
+            <p>Créez un salon, partagez le code, et tout le monde voit la même vidéo au même moment.</p>
+        </header>
 
-    <main>
-        <section>
-            <h2>Créer un salon</h2>
-            <p>Créez un salon et invitez vos amis.</p>
+        <main class="cartes">
+            <section class="carte">
+                <h2>Créer un salon</h2>
+                <p>Vous recevrez un code à partager avec vos amis.</p>
 
-            <form id="form-creer">
-                <label for="pseudo-creer">Votre pseudo :</label>
-                <input
-                    type="text"
-                    id="pseudo-creer"
-                    name="pseudo"
-                    minlength="2"
-                    maxlength="20"
-                    required
-                >
+                <form id="form-creer">
+                    <label for="pseudo-creer">Votre pseudo</label>
+                    <input type="text" id="pseudo-creer" minlength="2" maxlength="20"
+                           placeholder="Ex : Racha" autocomplete="off" required>
+                    <button type="submit">Créer un salon</button>
+                </form>
+            </section>
 
-                <button type="submit">Créer un salon</button>
-            </form>
-        </section>
+            <section class="carte">
+                <h2>Rejoindre un salon</h2>
+                <p>Entrez le code que vos amis vous ont donné.</p>
 
-        <section>
-            <h2>Rejoindre un salon</h2>
-            <p>Entrez le code du salon pour rejoindre vos amis.</p>
+                <form id="form-rejoindre">
+                    <label for="pseudo-rejoindre">Votre pseudo</label>
+                    <input type="text" id="pseudo-rejoindre" minlength="2" maxlength="20"
+                           placeholder="Ex : Adam" autocomplete="off" required>
 
-            <form id="form-rejoindre">
-                <label for="pseudo-rejoindre">Votre pseudo :</label>
-                <input
-                    type="text"
-                    id="pseudo-rejoindre"
-                    name="pseudo"
-                    minlength="2"
-                    maxlength="20"
-                    required
-                >
+                    <label for="code-salon">Code du salon</label>
+                    <input type="text" id="code-salon" minlength="6" maxlength="6"
+                           placeholder="ABC234" autocomplete="off" class="champ-code" required>
 
-                <label for="code-salon">Code du salon :</label>
-                <input
-                    type="text"
-                    id="code-salon"
-                    name="code"
-                    minlength="6"
-                    maxlength="6"
-                    pattern="[A-Z0-9]{6}"
-                    placeholder="Ex : ABC234"
-                    required
-                >
+                    <button type="submit" class="bouton-secondaire">Rejoindre</button>
+                </form>
+            </section>
 
-                <button type="submit">Rejoindre un salon</button>
-            </form>
-        </section>
+            <p id="message-erreur" role="alert" aria-live="polite"></p>
+        </main>
+    </div>
 
-        <p id="message-erreur" role="alert" aria-live="polite"></p>
-    </main>
+    <!-- ===== PAGE DU SALON ===== -->
+    <div id="page-salon" hidden>
+        <header class="barre-salon">
+            <div class="logo">
+                <span class="logo-icone">▶</span>
+                <span>StreamSquad</span>
+            </div>
+
+            <div class="infos-salon">
+                <span class="etiquette">Code du salon</span>
+                <span id="code-affiche" class="code"></span>
+                <button id="bouton-copier" class="bouton-petit" type="button">Copier le lien</button>
+            </div>
+
+            <button id="bouton-quitter" class="bouton-petit bouton-quitter" type="button">Quitter</button>
+        </header>
+
+        <main class="grille-salon">
+            <!-- Colonne de gauche : vidéo + playlist -->
+            <div class="colonne-video">
+                <div class="cadre-video">
+                    <div id="lecteur"></div>
+                    <div id="aucune-video" class="aucune-video">
+                        <p>Aucune vidéo pour l'instant.</p>
+                        <p>Collez un lien YouTube ci-dessous pour commencer.</p>
+                    </div>
+                    <button id="bouton-rejoindre-lecture" type="button" hidden>
+                        ▶ Rejoindre la lecture
+                    </button>
+                </div>
+
+                <form id="form-video" class="form-video">
+                    <input type="text" id="lien-video" placeholder="Collez un lien YouTube (youtube.com/watch?v=... ou youtu.be/...)"
+                           autocomplete="off" required>
+                    <button type="submit" id="bouton-lire">Lire</button>
+                    <button type="button" id="bouton-ajouter" class="bouton-secondaire">+ Playlist</button>
+                </form>
+
+                <section class="panneau">
+                    <h3>Playlist <span id="nombre-playlist" class="compteur">0</span></h3>
+                    <ol id="liste-playlist" class="liste-playlist"></ol>
+                    <p id="playlist-vide" class="vide">La playlist est vide.</p>
+                </section>
+            </div>
+
+            <!-- Colonne de droite : participants + chat -->
+            <aside class="colonne-cote">
+                <section class="panneau">
+                    <h3>Participants <span id="nombre-participants" class="compteur">0</span></h3>
+                    <ul id="liste-participants" class="liste-participants"></ul>
+                </section>
+
+                <section class="panneau panneau-chat">
+                    <h3>Chat</h3>
+                    <ul id="liste-messages" class="liste-messages"></ul>
+                    <form id="form-chat" class="form-chat">
+                        <input type="text" id="texte-message" maxlength="500"
+                               placeholder="Votre message..." autocomplete="off" required>
+                        <button type="submit">Envoyer</button>
+                    </form>
+                </section>
+            </aside>
+        </main>
+    </div>
+
+    <!-- Notification en bas de l'écran (erreurs, "lien copié", etc.) -->
+    <div id="notification" class="notification" hidden></div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/Connexion.js"></script>
+    <script src="js/Lecteur.js"></script>
+    <script src="js/salon.js"></script>
     <script src="js/accueil.js"></script>
-
+    <script src="https://www.youtube.com/iframe_api"></script>
 </body>
 </html>
