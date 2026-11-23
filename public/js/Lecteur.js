@@ -35,7 +35,8 @@ class Lecteur {
     this.lectureDemandee = etat.enLecture;
     if (this.lectureDemandee) {
       setTimeout(() => {
-        const bloque = this.player.getPlayerState() !== YT.PlayerState.PLAYING;
+        const etatIci = this.player.getPlayerState();
+        const bloque = etatIci !== YT.PlayerState.PLAYING && etatIci !== YT.PlayerState.BUFFERING;
         if (this.lectureDemandee && bloque) {
           this.quandBloque();
         }
@@ -89,6 +90,12 @@ class Lecteur {
     }
     if (event.data === YT.PlayerState.PAUSED) {
       this.envoyer("video:pause", { position: this.player.getCurrentTime() });
+    }
+    if (event.data === YT.PlayerState.BUFFERING) {
+      this.envoyer("video:seek", { position: this.player.getCurrentTime() });
+    }
+    if (event.data === YT.PlayerState.ENDED) {
+      this.envoyer("video:fin", { idVideo: this.idVideo });
     }
   }
   sauterA(position) {
