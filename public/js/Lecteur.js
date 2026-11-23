@@ -90,6 +90,9 @@ class Lecteur {
     if (event.data === YT.PlayerState.PAUSED) {
       this.envoyer("video:pause", { position: this.player.getCurrentTime() });
     }
+    if (event.data === YT.PlayerState.ENDED) {
+      this.envoyer("video:fin", { idVideo: this.idVideo });
+    }
   }
   sauterA(position) {
     this.silence();
