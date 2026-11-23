@@ -58,6 +58,7 @@ class PageSalon {
     if (this.lecteurEstPret()) {
       this.lecteur.player.stopVideo();
       this.lecteur.idVideo = null;
+      this.lecteur.lectureDemandee = false;
     }
   }
 
@@ -97,7 +98,8 @@ class PageSalon {
     // copier le lien du salon
     document.getElementById("bouton-copier").addEventListener("click", () => {
       const lien = location.origin + "/?code=" + this.code;
-      navigator.clipboard.writeText(lien)
+      navigator.clipboard
+        .writeText(lien)
         .then(() => notifier("Lien copié : " + lien))
         .catch(() => notifier("Lien du salon : " + lien));
     });
@@ -210,7 +212,7 @@ class PageSalon {
       miniature.alt = "";
 
       const texte = document.createElement("span");
-      texte.textContent = (index + 1) + ". youtu.be/" + idVideo;
+      texte.textContent = index + 1 + ". youtu.be/" + idVideo;
 
       li.append(miniature, texte);
       this.listePlaylist.append(li);
@@ -260,6 +262,7 @@ class PageSalon {
       if (this.lecteur.idVideo !== null) {
         this.lecteur.player.stopVideo();
         this.lecteur.idVideo = null;
+        this.lecteur.lectureDemandee = false;
       }
       return;
     }
