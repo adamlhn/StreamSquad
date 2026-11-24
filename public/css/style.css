@@ -508,3 +508,43 @@ button:active {
         display: none;
     }
 }
+/* ===== Mode clair (F13) ===== */
+body.clair {
+    --fond: #f4f5fb;
+    --fond-carte: #ffffff;
+    --fond-champ: #eef0f6;
+    --bordure: #d6dae6;
+    --texte: #1a1f2e;
+    --texte-doux: #5b6478;
+}
+
+body.clair .barre-salon {
+    background-color: rgba(255, 255, 255, 0.85);
+}
+
+body.clair .notification {
+    background-color: #ffffff;
+}
+
+body.clair .bouton-secondaire,
+body.clair .compteur {
+    color: var(--violet-fonce);
+}
+
+/* Bouton rond fixé en haut à droite */
+.bouton-theme {
+    position: fixed;
+    top: 12px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 18px;
+    z-index: 50;
+}
+
+/* on laisse de la place au bouton dans la barre du salon */
+.barre-salon {
+    padding-right: 76px;
+}
