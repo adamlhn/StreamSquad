@@ -6,6 +6,7 @@ const { Server } = require("socket.io");
 
 const Serveur = require("./logique/Serveur");
 const brancherSalon = require("./sockets/salon");
+const brancherPlaylist = require("./sockets/playlist");
 const brancherVideo = require("./sockets/video");
 
 const PORT = process.env.PORT || 3000;
@@ -24,6 +25,7 @@ serveur.demarrerSynchro();
 
 io.on("connection", (socket) => {
   brancherSalon(io, socket, serveur);
+  brancherPlaylist(io, socket, serveur);
   brancherVideo(io, socket, serveur);
   // les autres lots ajouteront ici : brancherChat, brancherPlaylist
 });
