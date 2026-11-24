@@ -1,5 +1,9 @@
 const Salon = require("./Salon");
+<<<<<<< HEAD
 const Playlist = require("./Playlist");
+=======
+const Playlist = require("./Playlist"); // playlist (lot D)
+>>>>>>> origin/main
 
 const CARACTERES = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 const LONGUEUR_CODE = 6;
@@ -29,7 +33,11 @@ class Serveur {
     while (this.salons.has(code)) {
       code = this.genererCode();
     }
+<<<<<<< HEAD
     const salon = new Salon(code, new Playlist());
+=======
+    const salon = new Salon(code, new Playlist()); // playlist (lot D)
+>>>>>>> origin/main
     this.salons.set(code, salon);
     return salon;
   }
