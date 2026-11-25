@@ -548,3 +548,11 @@ body.clair .compteur {
 .barre-salon {
     padding-right: 76px;
 }
+
+/* ===== Notifications dans le chat (F15) ===== */
+.message-systeme {
+    align-self: center;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--texte-doux);
+}

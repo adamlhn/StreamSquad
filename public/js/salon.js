@@ -9,6 +9,7 @@ class PageSalon {
     this.code = null;
     this.lecteur = null;
     this.etatEnAttente = null; // état vidéo reçu avant que le lecteur soit prêt
+    this.anciensParticipants = null; // pour savoir qui arrive et qui part (F15)
 
     // éléments de la page
     this.page = document.getElementById("page-salon");
@@ -39,6 +40,7 @@ class PageSalon {
     // met le code dans l'adresse : la page peut être partagée telle quelle
     history.replaceState(null, "", "?code=" + etat.code);
 
+    this.anciensParticipants = null;
     this.afficherParticipants(etat.participants);
     this.listeMessages.innerHTML = "";
     for (const message of etat.messages) {
@@ -137,6 +139,7 @@ class PageSalon {
   // ---------- Participants (F5) ----------
 
   afficherParticipants(liste) {
+    this.annoncerArriveesEtDeparts(liste);
     this.listeParticipants.innerHTML = "";
     for (const participant of liste) {
       const li = document.createElement("li");
@@ -161,6 +164,38 @@ class PageSalon {
     this.nombreParticipants.textContent = liste.length;
   }
 
+  // ---------- Notifications dans le chat (F15) ----------
+
+  // compare l'ancienne liste et la nouvelle pour trouver qui arrive et qui part
+  annoncerArriveesEtDeparts(liste) {
+    if (this.anciensParticipants !== null) {
+      // nouveaux : dans la nouvelle liste mais pas dans l'ancienne
+      for (const participant of liste) {
+        const etaitLa = this.anciensParticipants.some((p) => p.id === participant.id);
+        if (!etaitLa) {
+          this.afficherNotification(participant.pseudo + " a rejoint le salon");
+        }
+      }
+      // partis : dans l'ancienne liste mais plus dans la nouvelle
+      for (const participant of this.anciensParticipants) {
+        const estEncoreLa = liste.some((p) => p.id === participant.id);
+        if (!estEncoreLa) {
+          this.afficherNotification(participant.pseudo + " a quitté le salon");
+        }
+      }
+    }
+    this.anciensParticipants = liste;
+  }
+
+  // ajoute une ligne grise dans le chat
+  afficherNotification(texte) {
+    const li = document.createElement("li");
+    li.className = "message-systeme";
+    li.textContent = texte;
+    this.listeMessages.append(li);
+    this.listeMessages.scrollTop = this.listeMessages.scrollHeight;
+  }
+  
   // ---------- Chat (F3) ----------
 
   afficherMessage(message) {
